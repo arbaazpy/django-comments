@@ -2,6 +2,7 @@ import random
 
 from django.db import transaction
 from django.core.management.base import BaseCommand
+from django.contrib.auth import get_user_model
 
 from app.models import User, Thread, Club, Comment
 from app.factories import (
@@ -16,6 +17,11 @@ NUM_CLUBS = 10
 NUM_THREADS = 12
 COMMENTS_PER_THREAD = 25
 USERS_PER_CLUB = 8
+
+ADMIN_USERNAME = "admin"
+ADMIN_PASSWORD = "admin"
+ADMIN_EMAIL = "admin@admin.com"
+
 
 class Command(BaseCommand):
     help = "Generates test data"
@@ -54,3 +60,10 @@ class Command(BaseCommand):
                     user=commentor,
                     thread=thread
                 )
+
+
+        # Create superuser
+        user = get_user_model()
+        if not user.objects.filter(username=ADMIN_USERNAME, email=ADMIN_EMAIL).exists():
+            user.objects.create_superuser(username=ADMIN_USERNAME, password=ADMIN_PASSWORD, email=ADMIN_EMAIL)
+            self.stdout.write(f'Local user "{ADMIN_USERNAME}" was created')
