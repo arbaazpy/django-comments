@@ -11,16 +11,13 @@ from app.factories import (
     ClubFactory,
     CommentFactory
 )
+from utils import constants
 
 NUM_USERS = 50
 NUM_CLUBS = 10
 NUM_THREADS = 12
 COMMENTS_PER_THREAD = 25
 USERS_PER_CLUB = 8
-
-ADMIN_USERNAME = "admin"
-ADMIN_PASSWORD = "admin"
-ADMIN_EMAIL = "admin@admin.com"
 
 
 class Command(BaseCommand):
@@ -64,6 +61,6 @@ class Command(BaseCommand):
 
         # Create superuser
         user = get_user_model()
-        if not user.objects.filter(username=ADMIN_USERNAME, email=ADMIN_EMAIL).exists():
-            user.objects.create_superuser(username=ADMIN_USERNAME, password=ADMIN_PASSWORD, email=ADMIN_EMAIL)
-            self.stdout.write(f'Local user "{ADMIN_USERNAME}" was created')
+        if not user.objects.filter(username=constants.ADMIN_USERNAME, email=constants.ADMIN_EMAIL).exists():
+            user.objects.create_superuser(username=constants.ADMIN_USERNAME, password=constants.ADMIN_PASSWORD, email=constants.ADMIN_EMAIL)
+            self.stdout.write(f'Local user "{constants.ADMIN_USERNAME}" was created')

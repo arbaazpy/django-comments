@@ -3,6 +3,8 @@
 import os
 import sys
 
+from utils import constants
+
 
 def main():
     """Run administrative tasks."""
@@ -19,4 +21,5 @@ def main():
 
 
 if __name__ == '__main__':
+    print(f"Admin credentials: username={constants.ADMIN_USERNAME} password={constants.ADMIN_PASSWORD}")
     main()
